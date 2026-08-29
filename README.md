@@ -5,7 +5,7 @@
 * i am not exactly sattisfied with my progress, but it was nice fucking finally coding again mostly by hand
 
 | File                 | Description |
-| :------------------: | :---------: |
+| :------------------- | :---------- |
 | main.cpp             | main, duh |
 | raylib-extra.hpp     | the minimal of what i needed, feel free to copy over the whole thing if you wish |
 | draw.hpp             | drawing decoupled; due to the scope of the project, admittedly it doesnt matter that much |
