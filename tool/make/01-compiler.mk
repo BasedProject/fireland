@@ -8,7 +8,7 @@ HELP_ME += \
 "This file provides the IS_GCC and IS_CLANG, which will both be set accordingly by a string search.\n" \
 "\n"
 
-USE_MOLD ?= 1
+USE_MOLD ?= 0
 ifeq (${LD}${USE_MOLD},ld1)
         ifneq ($(shell which mold 2> /dev/null),)
                 LDFLAGS += -fuse-ld=mold
