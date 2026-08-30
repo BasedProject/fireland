@@ -1,22 +1,26 @@
 #include <assert.h>
 #include <stddef.h>
 #include <vector>
+#include <numeric>
 #include <stdexcept>
 #include <raylib.h>
 
 using namespace std;
-
 
 #include "raylib-extra.hpp"
 
 v2 screen_area[1];
 
 #include "meat.hpp"
-#include "Board.hpp"
-#include "board_generation.hpp"
 
 float road_diameter  = 50;
 float block_diameter = 20;
+
+int TICK = 0;
+
+#include "Board.hpp"
+#include "board_generation.hpp"
+#include "fire.hpp"
 #include "draw.hpp"
 
 int main(int ac, char ** av)
@@ -31,23 +35,32 @@ int main(int ac, char ** av)
 
     Board board = Board(mapshape->x, mapshape->y); // AM: thoughts on v2 being split on input in C++ (primarily C++ at all)
     randomize_board(board);
+    random_fires(board, 3);
 
     while (!WindowShouldClose()) {
-      physical_area[0] = rl_get_render_area();
-      {   BeginTextureMode(screen[0]);
-          draw_board(board);
-          EndTextureMode();
-      }
-      {   BeginDrawing();
-          DrawTexturePro(screen->texture,
-                         rl_screen_shape(screen),
-                         rl_v4_rectangle(rl_fit_centered(screen_area[0], physical_area[0])),
-                         (v2){ 0, 0 },
-                         0,
-                         WHITE);
-          ClearBackground(BLACK);
-          EndDrawing();
-      }
+        // Update
+        update_fire_spread(board);
+        physical_area[0] = rl_get_render_area();
+        ++TICK;
+
+        // Draw
+        {   BeginTextureMode(screen[0]);
+            draw_board(board);
+            draw_debug_fire(board);
+            draw_debug_grid();
+            EndTextureMode();
+        }
+
+        {   BeginDrawing();
+            DrawTexturePro(screen->texture,
+                           rl_screen_shape(screen),
+                           rl_v4_rectangle(rl_fit_centered(screen_area[0], physical_area[0])),
+                           (v2){ 0, 0 },
+                           0,
+                           WHITE);
+            ClearBackground(BLACK);
+            EndDrawing();
+        }
     }
 
     UnloadRenderTexture(screen[0]);

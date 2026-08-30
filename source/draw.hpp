@@ -102,3 +102,24 @@ void draw_debug_grid(void) {
         }
     }
 }
+
+void draw_debug_fire(const Board & board) {
+    const int cell_diameter = block_diameter + road_diameter;
+    Color fire_overlay = (Color) { 255, 0, 0, 100 };
+    for (int y = 0; y < board.height; y++) {
+        for (int x = 0; x < board.width; x++) {
+            const Board::Cell & cell = board.at(x, y);
+            if (cell.is_on_fire) {
+                const int px = road_diameter + x * cell_diameter;
+                const int py = road_diameter + y * cell_diameter;
+                DrawRectangle(
+                    px,
+                    py,
+                    block_diameter,
+                    block_diameter,
+                    fire_overlay
+                );
+            }
+        }
+    }
+}

@@ -293,3 +293,21 @@ inline BuildingMap randomize_board(Board &board) {
     set_main_donut_road(board, true);
     return random_network(board);
 }
+
+void random_fires(Board & board, int n) {
+    const int total_cells = board.width * board.height;
+    n = std::min(n, total_cells);
+
+    std::vector<int> indices(total_cells);
+    std::iota(indices.begin(), indices.end(), 0);
+
+    for (int i = 0; i < n; i++) {
+        int j = i + GetRandomValue(0, total_cells - i - 1);
+        std::swap(indices[i], indices[j]);
+
+        int idx = indices[i];
+        int x = idx % board.width;
+        int y = idx / board.width;
+        board.at(x, y).is_on_fire = true;
+    }
+}
