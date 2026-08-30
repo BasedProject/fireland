@@ -69,3 +69,15 @@ void update_fire_spread(Board & board) {
         c.lit_tick   = TICK;
     }
 }
+
+void hose_fire(Board::Cell & cell) {
+    if (not cell.is_on_fire) {
+        return;
+    }
+
+    cell.lit_tick += 60;
+
+    if (cell.lit_tick >= TICK) {
+        cell.is_on_fire = false;
+    }
+}
