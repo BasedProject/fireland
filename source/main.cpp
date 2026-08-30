@@ -29,6 +29,7 @@ int main(void) {
         ClearBackground(BLACK);
         DrawText("Hello, world!", 190, 200, 20, DARKGRAY);
         draw_board(board);
+        draw_debug_fire(board);
         draw_debug_grid();
       EndDrawing();
     }
