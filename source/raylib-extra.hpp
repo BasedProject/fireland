@@ -16,3 +16,6 @@ typedef Sound rl_sound;
 typedef Font rl_font;
 // meat.hpp overlaps heavily with snake casing
 
+void log_v2(v2 v) {
+    TraceLog(LOG_INFO, "%f %f", v.x, v.y);
+}

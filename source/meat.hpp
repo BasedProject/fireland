@@ -7,17 +7,19 @@
 
 #define warn(...) fprintf(stderr, __VA_ARGS__)
 
-v4 rl_fit_centered(v2 fit, v2 inside)
-{ float scale =
-    inside.x / fit.x < inside.y / fit.y
-  ? inside.x / fit.x
-  : inside.y / fit.y;
-  float  width = fit.x * scale;
-  float height = fit.y * scale;
-  return
-    (v4){ (inside.x -  width) * 0.5f,
-          (inside.y - height) * 0.5f,
-          width, height };
+v4 rl_fit_centered(v2 fit, v2 inside) {
+    float scale = inside.x / fit.x < inside.y / fit.y
+        ? inside.x / fit.x
+        : inside.y / fit.y
+    ;
+    float width  = fit.x * scale;
+    float height = fit.y * scale;
+    return (v4){
+        (inside.x -  width) * 0.5f,
+        (inside.y - height) * 0.5f,
+        width,
+        height,
+    };
 }
 
 Rectangle rl_v4_rectangle(v4 v)
@@ -49,7 +51,7 @@ Rectangle rl_screen_shape(rl_screen * screen)
 void meat_init(char * program_name, rl_screen * screen, v2 * screen_area, v2 * physical_area)
 {   screen_area[0] = (v2) {1920, 1080 };
 
-    SetTraceLogLevel(LOG_ERROR);
+    //SetTraceLogLevel(LOG_ERROR);
     SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_WINDOW_HIGHDPI | FLAG_WINDOW_RESIZABLE);
 
     if (rl_init_window2(screen_area[0], program_name))
