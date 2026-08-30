@@ -1,13 +1,19 @@
+v2 get_board_display_size(const Board & board) {
+    return xy2v2(
+        (board.width  * block_diameter) + ((board.width  + 1) * road_diameter),
+        (board.height * block_diameter) + ((board.height + 1) * road_diameter)
+    );
+}
+
 void draw_board(const Board & board) {
     const int cell_diameter = block_diameter + road_diameter;
 
+    v2 display_size = get_board_display_size(board);
     Rectangle background = (Rectangle) {
         0,
         0,
-        board.width * block_diameter +
-            (board.width + 1) * road_diameter,
-        board.height * block_diameter +
-            (board.height + 1) * road_diameter,
+        display_size.x,
+        display_size.y
     };
 
     DrawRectangleRec(background, DARKGRAY);

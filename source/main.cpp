@@ -52,6 +52,8 @@ int main(int ac, char ** av)
     randomize_board(board);
     random_fires(board, 3);
 
+    v2 screen_space_used_by_board = get_board_display_size(board);
+
     while (!WindowShouldClose()) {
         // Update
         update_fire_spread(board);
@@ -61,6 +63,7 @@ int main(int ac, char ** av)
 
         // Draw
         {   BeginTextureMode(screen[0]);
+            ClearBackground(GREEN);
             draw_board(board);
             // draw_player(player, 50, rl_screen_shape(screen));
             draw_debug_fire(board);
@@ -69,13 +72,22 @@ int main(int ac, char ** av)
         }
 
         {   BeginDrawing();
-            DrawTexturePro(screen->texture,
-                           rl_screen_shape(screen),
-                           rl_v4_rectangle(rl_fit_centered(screen_area[0], physical_area[0])),
-                           (v2){ 0, 0 },
-                           0,
-                           WHITE);
             ClearBackground(BLACK);
+            DrawTexturePro(
+                screen[0].texture,
+                (Rectangle){
+                    0,
+                    -screen_space_used_by_board.y,
+                    screen_space_used_by_board.x,
+                    -screen_space_used_by_board.y
+                },
+                rl_v4_rectangle(
+                    rl_fit_centered(screen_space_used_by_board, screen_area[0])
+                ),
+                (v2){ 0, 0 },
+                0,
+                WHITE
+            );
             EndDrawing();
         }
     }
