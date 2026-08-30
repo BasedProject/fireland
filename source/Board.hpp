@@ -59,6 +59,7 @@ class Board {
         bool has_road_above = false;
         bool has_road_below = false;
         bool is_on_fire     = false;
+        bool lit_tick       = 0;
 
         bool & has_road(road_e i) {
             switch (i) {

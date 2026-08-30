@@ -14,8 +14,11 @@ const float block_diameter = 70;
 const int W = 1200;
 const int H = 800;
 
+int TICK = 0;
+
 #include "Board.hpp"
 #include "board_generation.hpp"
+#include "fire.hpp"
 #include "draw.hpp"
 
 // ripped from meat
@@ -114,6 +117,12 @@ int main(int ac, char ** av)
     random_fires(board, 3);
 
     while (!WindowShouldClose()) {
+        // Update
+        update_fire_spread(board);
+
+        ++TICK;
+
+        // Draw
       physical_area[0] = rl_get_render_area();
       {   BeginTextureMode(screen[0]);
           draw_board(board);
