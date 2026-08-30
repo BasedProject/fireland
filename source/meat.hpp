@@ -27,6 +27,12 @@ v4 rl_fit_centered(v2 fit, v2 inside) {
 Rectangle rl_v4_rectangle(v4 v)
 { return (Rectangle) { v.x, v.y, v.z, v.w }; }
 
+Rectangle rl_v2_rectangle_wh(v2 v)
+{ return (Rectangle) { 0, 0, v.x, v.y }; }
+
+Rectangle rl_v2_rectangle_xy(v2 v)
+{ return (Rectangle) { v.x, v.y, 0, 0 }; }
+
 void rl_init_window_v2(const v2 area_maybe, const char * name)
 { InitWindow(area_maybe.x, area_maybe.y, name); }
 
@@ -51,10 +57,7 @@ Rectangle rl_screen_shape(rl_screen * screen)
 }
 
 void meat_init(char * program_name, rl_screen * screen, v2 * screen_area, v2 * physical_area)
-{   screen_area[0] = (v2) {1920, 1080 };
-
-    //SetTraceLogLevel(LOG_ERROR);
-    SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_WINDOW_HIGHDPI | FLAG_WINDOW_RESIZABLE);
+{   SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_WINDOW_HIGHDPI | FLAG_WINDOW_RESIZABLE);
 
     if (rl_init_window2(screen_area[0], program_name))
     { atexit(CloseWindow);
