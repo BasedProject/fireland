@@ -8,8 +8,8 @@ TARGET := $(shell basename $$PWD).out
 # commented assignments are overrides and are otherwise reasonable defaults.
 
 CFLAGS   := -std=c23 -O2 -pthread
-CXXFLAGS := -std=c++20 -O2 -pthread -Wno-c99-extensions
-CPPFLAGS := -D_GNU_SOURCE -I/usr/include/chad
+CXXFLAGS := -std=c++20 -O2 -pthread
+CPPFLAGS := -D_GNU_SOURCE -I/usr/include/chad -Wno-c99-extensions -Wno-bit-int-extension
 LDFLAGS  := -lm -lraylib -lglfw -lX11
 
 SOURCE.dir := source
