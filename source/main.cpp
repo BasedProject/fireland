@@ -1,9 +1,19 @@
 #include <assert.h>
 #include <stddef.h>
+#include <math.h>
 #include <vector>
 #include <numeric>
 #include <stdexcept>
 #include <raylib.h>
+extern "C" {
+  #define __STDC_VERSION__TEMP __STDC_VERSION__
+  #undef __STDC_VERSION__
+  #define __STDC_VERSION__ 999999L
+  #include <terry.h>
+  #undef __STDC_VERSION__
+  #define __STDC_VERSION__ __STDC_VERSION__TEMP
+}
+
 
 using namespace std;
 
@@ -22,17 +32,22 @@ int TICK = 0;
 #include "board_generation.hpp"
 #include "fire.hpp"
 #include "draw.hpp"
+#include "player.hpp"
 
 int main(int ac, char ** av)
-{   rl_screen screen[1];
+{   char * program_name = av[0];
+    rl_screen screen[1];
     v2 physical_area[1];
     // Texture texture[TEXTURE_END];
     // Sound sound[SOUND_END];
 
-    meat_init(av[0], screen, screen_area, physical_area);
+    // change_directory(program_name);
+
+    meat_init(program_name, screen, screen_area, physical_area);
 
     v2 mapshape[1] = {12,8};
 
+    player_t player[0] = {};
     Board board = Board(mapshape->x, mapshape->y); // AM: thoughts on v2 being split on input in C++ (primarily C++ at all)
     randomize_board(board);
     random_fires(board, 3);
@@ -41,11 +56,13 @@ int main(int ac, char ** av)
         // Update
         update_fire_spread(board);
         physical_area[0] = rl_get_render_area();
+        // update_player(player, rl_screen_shape(screen));
         ++TICK;
 
         // Draw
         {   BeginTextureMode(screen[0]);
             draw_board(board);
+            // draw_player(player, 50, rl_screen_shape(screen));
             draw_debug_fire(board);
             draw_debug_grid();
             EndTextureMode();

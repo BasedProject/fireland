@@ -1,4 +1,6 @@
-// ripped from meat
+// stuff ripped from prior projects
+
+// Meat
 #define die(...)                  \
   do {                            \
     warn(__VA_ARGS__);            \
@@ -78,4 +80,58 @@ void meat_init(char * program_name, rl_screen * screen, v2 * screen_area, v2 * p
 
     physical_area[0] = rl_get_render_area();
 }
+// ---
+
+// Acelata
+void
+DrawCentered(Texture * texture, Rectangle source, Rectangle dest, float degrees, Color color)
+{ Vector2 origin = { dest.width / 2.0f, dest.height / 2.0f };
+  DrawTexturePro(*texture, source, dest, origin, degrees, color);
+}
+
+Vector2
+WrapOffset(Vector2 center, float hw, float hh, Rectangle area)
+{ float ox = center.x - hw < area.x             ? area.width
+           : center.x + hw > area.x + area.width ? -area.width
+           : 0;
+  float oy = center.y - hh < area.y              ? area.height
+           : center.y + hh > area.y + area.height ? -area.height
+           : 0;
+  return (Vector2){ ox, oy };
+}
+
+void
+DrawCenteredWrapped(Texture * texture, Rectangle source, Rectangle dest, Rectangle area, float degrees, Color color)
+{ float rad = degrees * (PI / 180.0f);
+  float c  = fabsf(cosf(rad));
+  float s  = fabsf(sinf(rad));
+  float hw = dest.width  / 2.0f;
+  float hh = dest.height / 2.0f;
+  float mx = hw * c + hh * s;   /* rotated half-width  */
+  float my = hw * s + hh * c;   /* rotated half-height */
+  Vector2 o = WrapOffset((Vector2){ dest.x, dest.y }, mx, my, area);
+
+                  DrawCentered(texture, source, dest, degrees, color);
+  if (o.x)        DrawCentered(texture, source, (Rectangle){ dest.x + o.x, dest.y,       dest.width, dest.height }, degrees, color);
+  if (o.y)        DrawCentered(texture, source, (Rectangle){ dest.x,       dest.y + o.y, dest.width, dest.height }, degrees, color);
+  if (o.x && o.y) DrawCentered(texture, source, (Rectangle){ dest.x + o.x, dest.y + o.y, dest.width, dest.height }, degrees, color);
+}
+
+void
+DrawCircleWrapped(Vector2 center, float radius, Rectangle area, Color color)
+{ Vector2 o = WrapOffset(center, radius, radius, area);
+
+                  DrawCircleV(center, radius, color);
+  if (o.x)        DrawCircleV((Vector2){ center.x + o.x, center.y       }, radius, color);
+  if (o.y)        DrawCircleV((Vector2){ center.x,       center.y + o.y }, radius, color);
+  if (o.x && o.y) DrawCircleV((Vector2){ center.x + o.x, center.y + o.y }, radius, color);
+}
+
+void wrap(v2 * position, Rectangle * screen) {
+  if (position->x > screen->width)  position->x -= screen->width;
+  if (position->x < 0)              position->x += screen->width;
+  if (position->y > screen->height) position->y -= screen->height;
+  if (position->y < 0)              position->y += screen->height;
+}
+
 // ---
