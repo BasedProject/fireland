@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stddef.h>
 #include <vector>
+#include <numeric>
 #include <stdexcept>
 #include <raylib.h>
 
@@ -23,6 +24,7 @@ int main(void) {
 
     Board board = Board(12, 8);
     randomize_board(board);
+    random_fires(board, 3);
 
     while (!WindowShouldClose()) {
       BeginDrawing();
