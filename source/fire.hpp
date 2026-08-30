@@ -5,7 +5,7 @@ static const float spread_max_multiplier       = 3.2f;
 
 static float burn_multiplieriplier(int burning_ticks) {
     float multiplier = 1.0f + burning_ticks * spread_growth_rate;
-    return std::min(multiplier, spread_max_multiplieriplier);
+    return std::min(multiplier, spread_max_multiplier);
 }
 
 void update_fire_spread(Board & board) {
