@@ -28,7 +28,7 @@ ${TARGET}: ${OBJECT.orig}
 ifeq (${SOURCE.orig.cxx},)
 	${QUIET}${LINK.c} -o "$@" $+
 else
-	${QUIET}${LINK.cpp} -o "$@" $+
+	${QUIET}${CXX} ${CXXFLAGS} -o "$@" $+ ${LDFLAGS}
 endif
 
 ${OBJECT.dir}/%.o: %.c
