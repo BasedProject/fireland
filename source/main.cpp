@@ -58,14 +58,13 @@ int main(int ac, char ** av)
         // Update
         update_fire_spread(board);
         physical_area[0] = rl_get_render_area();
-        // update_player(player, rl_screen_shape(screen));
+        update_player(player, rl_screen_shape(screen));
         ++TICK;
 
-        // Draw
         {   BeginTextureMode(screen[0]);
             ClearBackground(GREEN);
             draw_board(board);
-            // draw_player(player, 50, rl_screen_shape(screen));
+            draw_player(player, 50, rl_screen_shape(screen));
             draw_debug_fire(board);
             draw_debug_grid();
             EndTextureMode();

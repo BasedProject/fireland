@@ -15,6 +15,7 @@ void update_player(player_t * player, Rectangle screen_shape)
       if (IsKeyPressed (retrograde)                               ) player->direction->axis = -1; \
       if (IsKeyReleased(retrograde) && player->direction->axis < 0) player->direction->axis = IsKeyDown(prograde) ? 1 : 0; \
     } while (0);
+
     #define polar(north, south, west, east) do \
       { nullcancel(x, east, west);             \
         nullcancel(y, north, south);           \
@@ -22,16 +23,16 @@ void update_player(player_t * player, Rectangle screen_shape)
 
     polar(key[0], key[1], key[2], key[3]);
 
-    player->velocity->y += player->direction->y * speed->y;
-    player->velocity->x += player->direction->x * speed->x;
-    player->velocity->y *= dampen->y;
-    player->velocity->x *= dampen->x;
+    // player->velocity->y += player->direction->y * speed->y;
+    // player->velocity->x += player->direction->x * speed->x;
+    // player->velocity->y *= dampen->y;
+    // player->velocity->x *= dampen->x;
 
-    player->position->z += player->velocity->x;
-    player->position->x += cosf(DEG2RAD * player->position->z) * player->velocity->y;
-    player->position->y += sinf(DEG2RAD * player->position->z) * player->velocity->y;
+    // player->position->z += player->velocity->x;
+    // player->position->x += cosf(DEG2RAD * player->position->z) * player->velocity->y;
+    // player->position->y += sinf(DEG2RAD * player->position->z) * player->velocity->y;
 
-    wrap((v2*)player, &screen_shape);
+    // wrap((v2*)player, &screen_shape);
 }
 
 void draw_player(player_t * player, float diameter, Rectangle screen_shape)
