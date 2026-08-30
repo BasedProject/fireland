@@ -75,5 +75,7 @@ void meat_init(char * program_name, rl_screen * screen, v2 * screen_area, v2 * p
     else
     { die("No Render Texture :(\n");
     }
+
+    physical_area[0] = rl_get_render_area();
 }
 // ---

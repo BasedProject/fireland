@@ -6,27 +6,30 @@
 
 using namespace std;
 
+
 #include "raylib-extra.hpp"
 
-const float road_diameter  = 20;
-const float block_diameter = 70;
-const int W = 1200;
-const int H = 800;
+v2 screen_area[1];
 
+#include "meat.hpp"
 #include "Board.hpp"
 #include "board_generation.hpp"
+
+float road_diameter  = 50;
+float block_diameter = 20;
 #include "draw.hpp"
-#include "meat.hpp"
 
 int main(int ac, char ** av)
 {   rl_screen screen[1];
-    v2 screen_area[1], physical_area[1];
+    v2 physical_area[1];
     // Texture texture[TEXTURE_END];
     // Sound sound[SOUND_END];
 
     meat_init(av[0], screen, screen_area, physical_area);
 
-    Board board = Board(12, 8);
+    v2 mapshape[1] = {12,8};
+
+    Board board = Board(mapshape->x, mapshape->y); // AM: thoughts on v2 being split on input in C++ (primarily C++ at all)
     randomize_board(board);
 
     while (!WindowShouldClose()) {
