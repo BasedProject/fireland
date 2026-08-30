@@ -70,14 +70,14 @@ void update_fire_spread(Board & board) {
     }
 }
 
-void hose_fire(Cell & cell) {
+void hose_fire(Board::Cell & cell) {
     if (not cell.is_on_fire) {
         return;
     }
 
-    lit_tick += 60;
+    cell.lit_tick += 60;
 
-    if (lit_tick >= TICK) {
+    if (cell.lit_tick >= TICK) {
         cell.is_on_fire = false;
     }
 }

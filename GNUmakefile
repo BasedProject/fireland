@@ -9,7 +9,7 @@ TARGET := $(shell basename $$PWD).out
 
 CFLAGS   := -std=c23 -O2 -pthread
 CXXFLAGS := -std=c++20 -O2 -pthread -Wno-c99-extensions
-CPPFLAGS := -D_GNU_SOURCE
+CPPFLAGS := -D_GNU_SOURCE -I/usr/include/chad
 LDFLAGS  := -lm -lraylib -lglfw -lX11
 
 SOURCE.dir := source
