@@ -7,8 +7,6 @@
 
 #define warn(...) fprintf(stderr, __VA_ARGS__)
 
-typedef RenderTexture2D rl_screen;
-
 v4 rl_fit_centered(v2 fit, v2 inside)
 { float scale =
     inside.x / fit.x < inside.y / fit.y
